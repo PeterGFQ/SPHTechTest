@@ -8,8 +8,6 @@
 
 import Foundation
 import UIKit
-import SwiftyJSON
-import ObjectMapper
 
 class RestfulServices {
     
@@ -32,7 +30,8 @@ class RestfulServices {
         requestQuery.updateValue(RESOURCE_ID, forKey: KEY_RESOURCE_ID)
         requestQuery.updateValue("14", forKey: KEY_OFFSET)
         RxAlamofireUtils.getInstance().get(BASE_API_URL, requestQuery, RxAlamofireUtils.getTimeOut(), success: { (response, json) in
-           //todo mapping data
+            let quarterlyMDUs = DataMappingServices.getInstance().mapToQuarterlyMobileDataUsages(json: json)
+            fetchDataCompletionHandler(quarterlyMDUs)
         }, failure: failure)
     }
 }

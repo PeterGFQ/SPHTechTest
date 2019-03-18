@@ -18,4 +18,9 @@ extension String {
         let fromIndex = index(from: from)
         return substring(from: fromIndex)
     }
+    
+    func substring(to: Int) -> String {
+        let toIndex = index(from: to)
+        return substring(to: toIndex)
+    }
 }

@@ -21,6 +21,7 @@ class Exception {
         case Forbidden = "Forbidden"
         case NotFound = "NotFound"
         case DataNotAccept = "DataNotAccept"
+        case Conflict = "Conflict"
         case InternalServerError = "InternalServerError"
         
     }
@@ -35,6 +36,7 @@ class Exception {
         case NotFound = 404
         case DataNotAccept = 406
         case Forbidden = 408
+        case Conflict = 409
         case InternalServerError = 500
     }
     

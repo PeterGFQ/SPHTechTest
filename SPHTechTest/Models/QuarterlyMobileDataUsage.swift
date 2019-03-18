@@ -13,7 +13,7 @@ struct QuarterlyMobileDataUsage : Mappable {
     
     fileprivate var _id: Int?
     fileprivate var _quarterOfYear: String?
-    fileprivate var _volumeOfMobileData: Double?
+    fileprivate var _volumeOfMobileData: String?
     
     init?(map: Map) {
     }
@@ -44,12 +44,12 @@ struct QuarterlyMobileDataUsage : Mappable {
         }
     }
     
-    var volumeOfMobileData: Double?{
+    var volumeOfMobileData: String?{
         get{
             return self._volumeOfMobileData
         }
         set(value){
-            if(value == nil) {self._volumeOfMobileData = 0}
+            if(value == nil) {self._volumeOfMobileData = "0"}
             else {self._volumeOfMobileData = value}
         }
     }

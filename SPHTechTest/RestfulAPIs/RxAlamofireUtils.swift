@@ -28,6 +28,18 @@ class RxAlamofireUtils {
         return TIMEOUT
     }
     
+    /*
+     {
+     "help": "https://data.gov.sg/api/3/action/help_show?name=datastore_search",
+     "success": false,
+     "error": {
+     "__type": "Validation Error",
+     "__extras": [
+     "invalid value \"12\""
+     ]
+     }
+     }
+     */
     func get(_ apiURL: String,_ params: [String:Any]?, _ timeout: TimeInterval, success: @escaping success, failure: @escaping failure) {
         
         if !NetworkManager.sharedInstance.isConnectedToNetwork() {
@@ -47,10 +59,13 @@ class RxAlamofireUtils {
                 }
                 else {
                     if let errorData = (JSON(json).dictionaryObject) {
-                        failure(Exception(code: response.statusCode, message: errorData["message"] as! String))
-                    }else{
-                        failure(Exception(code: response.statusCode, message: Exception.Status.UmptyResponseBody.rawValue))
+                        if errorData["success"] as! Bool == false {
+                            let errorObj = errorData["error"] as AnyObject
+                            failure(Exception(code: response.statusCode, message: errorObj["__type"] as! String))
+                            return
+                        }
                     }
+                    failure(Exception(code: response.statusCode, message: Exception.Status.UnexpectedError.rawValue))
                 }
             }, onError: { (error) in
                 if let error = error as? RxError{
@@ -67,4 +82,5 @@ class RxAlamofireUtils {
             })
         //            .disposed(by: DisposeBag())
     }
+    
 }
